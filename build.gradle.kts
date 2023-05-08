@@ -1,4 +1,3 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -7,7 +6,7 @@ plugins {
 }
 
 group = "com.github.joaovictorjs"
-version = "1.0-SNAPSHOT"
+version = project.properties["application.version"] as String
 
 repositories {
     google()
@@ -34,9 +33,14 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.AppImage)
             packageName = "open_it"
-            packageVersion = "1.0.0"
+            packageVersion = "$version"
+
+            windows {
+                iconFile.set(project.file("logo.ico"))
+                menuGroup = "Open It"
+            }
         }
     }
 }
