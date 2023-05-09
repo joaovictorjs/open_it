@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.joaovictorjs"
-version = project.properties["application.version"] as String
+version = "1.0.0"
 
 repositories {
     google()
@@ -31,15 +31,26 @@ kotlin {
 
 compose.desktop {
     application {
+        args += listOf("version=$version")
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.AppImage)
-            packageName = "open_it"
+            packageName = "Open It"
+            version = "$version"
+            description = "A software to open files"
+            copyright = "© 2023 João Victor Justino de Souza. Todos os direitos reservados."
+            vendor = "joaovictorjs"
+            licenseFile.set(project.file("LICENSE"))
             packageVersion = "$version"
 
             windows {
                 iconFile.set(project.file("logo.ico"))
                 menuGroup = "Open It"
+                menu = true
+            }
+
+            linux {
+                iconFile.set(project.file("logo.png"))
             }
         }
     }
