@@ -1,11 +1,12 @@
 package screens.main.controllers
 
-import androidx.compose.runtime.*
 import androidx.compose.ui.window.FrameWindowScope
 import java.awt.Desktop
 import java.awt.FileDialog
 import java.io.File
+import java.io.IOException
 import java.net.URI
+import java.net.URLDecoder
 
 class MainController {
     fun openRepository() {
@@ -19,9 +20,14 @@ class MainController {
         callback(picker.files.map { it.absolutePath })
     }
 
-    fun openFiles(files: List<String>) {
-        files.forEach {
-            Desktop.getDesktop().open(File(it))
+    fun openFile(path: String) {
+        val decoded = URLDecoder.decode(File(path).normalize().absolutePath, "UTF-8")
+        try {
+            Desktop.getDesktop().open(File(decoded))
+        } catch (_: IOException) {
+
         }
     }
+
+    fun openFiles(files: List<String>) = files.forEach(::openFile)
 }
