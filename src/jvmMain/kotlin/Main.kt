@@ -10,9 +10,10 @@ import ui.color.DarkColorSchema
 import ui.color.LightColorSchema
 import ui.typography.Typography
 import java.awt.Dimension
-import java.awt.FileDialog
 
-fun main() = application {
+fun main(args: Array<String>) = application {
+    ApplicationPreferences.version(args.firstOrNull { it.startsWith("version=") })
+
     Window(
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(
